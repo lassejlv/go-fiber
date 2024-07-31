@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My First Web Page</title>
+    <title>{{ Title }}</title>
+    {{ include  "head" }}
   </head>
   <body>
-    <h1>Helo, {{ Name }}</h1>
+    {{ include  "components/nav" }}
 
-    {{ len(users) }} users found
-
-    {{ if len(users) == 2 }}
-    <p>There are 2 users whohoohoho 🥳</p>
-    {{ else }}
-    <p>There are more or less users, than 2 💀</p>
-    {{ end }}
-
-    {{ range users }}
-    <p>
-      {{ .Name }}
-      {{ .Age }}
-    </p>
-    {{ end }}
+    <h1 class="text-2xl">{{ len(Name) }}</h1>
   </body>
 </html>

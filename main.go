@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -9,25 +10,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type User struct {
-	Name string `json:"name"`
-	Age  int    `json:"age"`
-}
-
 func main() {
 
 	godotenv.Load()
-
-	users := []User{
-		{
-			Name: "Lasse",
-			Age:  18,
-		},
-		{
-			Name: "Alberte",
-			Age:  18,
-		},
-	}
 
 	engine := jet.New("./views", ".jet")
 
@@ -35,20 +20,19 @@ func main() {
 		Views: engine,
 	})
 
-	// Enable logger, with custom format. (this is awesome)
-	app.Use(logger.New(logger.Config{
-		Format: "${status} - ${method} ${path}\n",
-	}))
+	// Middleware
+	app.Static("/", "./public")
+	app.Use(logger.New())
 
 	app.Get("/", func(c *fiber.Ctx) error {
 
 		return c.Render("index", fiber.Map{
 			"Name":  "lasse",
-			"users": users,
+			"Title": "lasse",
 		})
 	})
 
 	ADDR := os.Getenv("ADDR")
-	app.Listen(ADDR)
+	log.Fatal(app.Listen(ADDR))
 
 }

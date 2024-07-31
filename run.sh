@@ -1,0 +1,1 @@
+concurrently "actionfile tailwindcss" "air"
